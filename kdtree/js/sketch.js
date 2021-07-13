@@ -90,5 +90,5 @@ function setup () {
     // console.log(rectangle[0][0] + rectangle_w/2 , height - rectangle[0][1] + rectangle_h/2,
     //     rectangle_w, rectangle_h)
 
-    console.log('range_query_orthogonal', found)
+    console.log('range_query_rect', found)
 }
