@@ -175,35 +175,20 @@ function range_query_orthogonal(node , rect , found , depth = 0) {
 }
 
 function contains(rect, point) {
-    // var contained = false;
-    // for (var i = 0; i < k; i ++) {
-
-    // }
-
+    var point_inf = rect[0] // inferior izquierdo del rectangulo
+    var point_sup = rect[1] // superior derecho del rectangulo
     return (
-        point[0]>=rect[0][0] &&
-        point[0]<=rect[1][0] &&
-        point[1]>=rect[0][1] &&
-        point[1]<=rect[1][1]);
-    // return(point.x>=this.x-this.w &&
-    //     point.x<=this.x+this.w &&
-    //     point.y>=this.y-this.h &&
-    //     point.y<=this.y+this.h);
-
-    // intersects(range){
-    //     return !(range.x-range.w>this.x+this.w ||
-    //         range.x+range.w<this.x-this.w ||
-    //         range.y-range.h>this.y+this.h ||
-    //         range.y+range.h<this.y-this.h);
-    // }
+        point[0]>=point_inf[0] &&
+        point[0]<=point_sup[0] &&
+        point[1]>=point_inf[1] &&
+        point[1]<=point_sup[1]);
 }
 
-function contains2(rect, point, axis) {
-    return (
-        point[axis]>=rect[0][axis] &&
-        point[axis]<=rect[1][axis]);
-
-}
+// function contains2(rect, point, axis) {
+//     return (
+//         point[axis]>=rect[0][axis] &&
+//         point[axis]<=rect[1][axis]);
+// }
 
 function range_query_rect(node , rect , found , depth = 0) { 
     if (node === null)
