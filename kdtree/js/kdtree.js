@@ -79,11 +79,9 @@ function closest_point(node , point , count, depth = 0, results) {
             'distance': distance, 
         });
     }
-
     // get rid of any extra results
 	while (results.length > count)
     results.pop();
-
     // whats got the got best _search result? left or right?
     var goLeft = node.point[axis] < point[axis];
 
@@ -99,7 +97,6 @@ function closest_point(node , point , count, depth = 0, results) {
     // value than the longest distance we already have in our _search results
     if ((opposite) && (distanceSquared(opposite.point, point) <= results[results.length - 1].distance))
         this.closest_point(opposite, point, count, depth + 1, results);
-
 }
 
 function getHeight(node) {
@@ -155,6 +152,81 @@ function build_kdtree(points, depth = 0){
 
 
 function range_query_circle(node , center , radio , queue , depth = 0) { }
+
+function range_query_orthogonal(node , rect , found , depth = 0) { 
+    if (node === null)
+        return;
+    var axis = depth % k;
+    if (node.point[axis] < rect[axis][0]){
+        range_query_orthogonal(node.right, rect, found, depth+1)
+        return
+    }
+    if (node.point[axis] > rect[axis][1]) {
+        range_query_orthogonal(node.left, rect, found, depth+1)
+        return
+    }
+    x = node.point.x
+    y = node.point.y
+    if (!(rect[0][0]>x || rect[0][1]<x || rect[1][0]>y || rect[1][1]<y)) { // test node in rect
+        found.append(node.point)
+        range_query_orthogonal(node.left, rect, found, depth+1)
+        range_query_orthogonal(node.right, rect, found, depth+1)
+    }
+}
+
+function contains(rect, point) {
+    // var contained = false;
+    // for (var i = 0; i < k; i ++) {
+
+    // }
+
+    return (
+        point[0]>=rect[0][0] &&
+        point[0]<=rect[1][0] &&
+        point[1]>=rect[0][1] &&
+        point[1]<=rect[1][1]);
+    // return(point.x>=this.x-this.w &&
+    //     point.x<=this.x+this.w &&
+    //     point.y>=this.y-this.h &&
+    //     point.y<=this.y+this.h);
+
+    // intersects(range){
+    //     return !(range.x-range.w>this.x+this.w ||
+    //         range.x+range.w<this.x-this.w ||
+    //         range.y-range.h>this.y+this.h ||
+    //         range.y+range.h<this.y-this.h);
+    // }
+}
+
+function contains2(rect, point, axis) {
+    return (
+        point[axis]>=rect[0][axis] &&
+        point[axis]<=rect[1][axis]);
+
+}
+
+function range_query_rect(node , rect , found , depth = 0) { 
+    if (node === null)
+        return;
+    var axis = depth % k;
+    // if (node.point[axis] < rect[axis][0]){
+    //     range_query_rect(node.right, rect, found, depth+1)
+    //     return
+    // }
+    // if (node.point[axis] > rect[axis][1]) {
+    //     range_query_rect(node.left, rect, found, depth+1)
+    //     return
+    // }
+    // x = node.point.x
+    // y = node.point.y
+    console.log('@', node.point)
+    console.log('@', contains(rect, node.point))
+    if (contains(rect, node.point)) { // test node in rect
+        found.push(node.point)
+    }
+    range_query_rect(node.right, rect, found, depth+1)
+    range_query_rect(node.left, rect, found, depth+1)
+}
 
 // digraph G {
 //     "106 ,189 " -> "6 ,114";
