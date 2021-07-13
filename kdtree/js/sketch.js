@@ -31,4 +31,36 @@ function setup () {
     var root = build_kdtree(data) ;
     console.log(root);
     console.log("digraph G {\n" + generate_dot(root) + "}");
+
+
+    var root = build_kdtree(data) ;
+    console.log(root);
+    console.log("digraph G {\n" + generate_dot(root) + "}");
+
+    var data = [];
+
+    var data1 = [
+        [40 ,70],
+        [70 ,130],
+        [90 ,40],
+        [110 , 100],
+        [140 ,110],
+        [160 , 100],
+        [150, 30]
+    ];
+    var point1 = [140 ,90]; // query
+    var root1 = build_kdtree(data1);
+    
+    console.log(closest_point_brute_force(data1, point1))
+    console.log(naive_closest_point(root1, point1))
+
+
+    var count = count || 1;
+	var results = [];
+	closest_point(root1, point1, count, 0, results);
+	if (results.length > count)
+		results.slice(0, count);
+
+    console.log('closest_point', results)
+
 }

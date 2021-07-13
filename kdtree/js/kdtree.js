@@ -29,6 +29,7 @@ function closest_point_brute_force(points, point){
             best_point = points[i];
         }
     }
+    console.log('best_distance', best_distance)
     return best_point;
 }
 function naive_closest_point(node, point, depth = 0, best = null){
@@ -52,6 +53,54 @@ function naive_closest_point(node, point, depth = 0, best = null){
     return  naive_closest_point(next_branch, point, depth +1, next_best);
 }
 
+
+function closest_point(node , point , count, depth = 0, results) { 
+    if (node === null)
+        return;
+    var axis = depth % k;
+    var distance = distanceSquared(node.point, point)
+    var i = results.length
+    if (i == 0) {
+        results.push({
+            'node': node, 
+            'distance': distance, 
+        })
+    }
+    for (i = 0; i < results.length; i++) {
+		if (distance < results[i].distance)
+			break;
+	}
+    // splice in our result
+    if ((i >= 0) &&  (i <= count))
+    {
+        // console.log('splicing in ' + node.point + ' with dist=' + distance + ' at ' + i);
+        results.splice(i, 0, {
+            'node': node, 
+            'distance': distance, 
+        });
+    }
+
+    // get rid of any extra results
+	while (results.length > count)
+    results.pop();
+
+    // whats got the got best _search result? left or right?
+    var goLeft = node.point[axis] < point[axis];
+
+    var target = goLeft ? node.left : node.right;
+    var opposite = goLeft ? node.right : node.left;
+
+    // target has our most likely nearest point, we go down that side of the
+    // tree first
+    if (target)
+        this.closest_point(target, point, count, depth + 1, results);
+
+    // _search the opposite direction, only if there is potentially a better
+    // value than the longest distance we already have in our _search results
+    if ((opposite) && (distanceSquared(opposite.point, point) <= results[results.length - 1].distance))
+        this.closest_point(opposite, point, count, depth + 1, results);
+
+}
 
 function getHeight(node) {
     if (node === null){
@@ -104,7 +153,6 @@ function build_kdtree(points, depth = 0){
     return node;
 }
 
-function closest_point(node , point , depth = 0) { }
 
 function range_query_circle(node , center , radio , queue , depth = 0) { }
 
