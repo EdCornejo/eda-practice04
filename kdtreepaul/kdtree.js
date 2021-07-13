@@ -136,7 +136,9 @@ function closest_point(node , point , depth = 0) {
     }
     best=closer_distance(point, closest_point(next_branch,point, depth +1), node.point);
     if (distanceSquared(point,best)>Math.abs(point[axis]-node.point[axis])){
-        
+        best=closer_distance(point, closest_point(opposite_branch,point, depth +1), best);
+    }return{
+        best
     }
 
 }
