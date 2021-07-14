@@ -12,7 +12,7 @@ class Node {
 function distanceSquared(point1, point2 ){
     var distance = 0;
     for (var i = 0; i < k; i ++)
-        distance += Math.pow ((point1 [i] - point2 [i]) , 2) ;
+        distance += Math.pow ((point1[i] - point2[i]) , 2) ;
     return Math.sqrt ( distance );
 }
 
@@ -104,9 +104,88 @@ function build_kdtree(points, depth = 0){
     return node;
 }
 
-function closest_point(node , point , depth = 0) { }
+function closer_distance(pivot, point1, point2){
+    if(point1 == null)
+        return point2;
 
-function range_query_circle(node , center , radio , queue , depth = 0) { }
+    if(point2 == null)
+        return point1;
+
+    let distance1 = distanceSquared(pivot, point1);
+    let distance2 = distanceSquared(pivot, point2);
+
+    if(distance1 < distance2){
+        return point1;
+    } else {
+        return point2;
+    }
+}
+
+function closest_point(root , point , depth = 0){
+    if(root == null)
+        return null;
+
+    let axis = depth % k;
+
+    let next_branch = null;
+    let opposite_branch = null;
+
+    if(point[axis] < root.point[axis]){
+        next_branch = root.left;
+        opposite_branch = root.right;
+    } else {
+        next_branch = root.right;
+        opposite_branch = root.left;
+    }
+
+    let best = closer_distance(point, closest_point(next_branch, point, depth + 1), root.point)
+
+    if(distanceSquared(point, best) > Math.abs(point[axis] - root.point[axis])){
+        best = closer_distance(point, closest_point(opposite_branch, point, depth + 1), best);
+    }
+    return best;
+}
+
+function kdCompare(root, point, depth){
+    let dim = depth % k;
+    if(point[dim] <= root.point[dim]){
+        return -1;
+    } else {
+        return 1;
+    }
+}
+
+function range_query_rect(root, rect, queue, depth=0){
+
+}
+
+
+function range_query_circle(root , center , radio , queue , depth = 0) {
+
+    if(root == null){
+        return null;
+    }
+    console.log(root, [center[0], center[1]], radio);
+    console.log(kdCompare(root, [center[0]-radio, center[1]-radio], depth));
+    if(kdCompare(root, [center[0]-radio, center[1]-radio], depth) > 0){
+        range_query_circle(root.right, center, radio, queue, depth + 1)
+        return null;
+    }
+
+    if(kdCompare(root, [center[0]+radio, center[1]+radio], depth) < 0){
+        range_query_circle(root.left, center, radio, queue, depth + 1)
+        return null;
+    }
+
+    if(distanceSquared(center, root.point) <= radio){
+        queue.push(root.point)
+    }
+
+    range_query_circle(root.left, center, radio, queue, depth + 1)
+    range_query_circle(root.right, center, radio, queue, depth + 1)
+    return null;
+
+}
 
 // digraph G {
 //     "106 ,189 " -> "6 ,114";
