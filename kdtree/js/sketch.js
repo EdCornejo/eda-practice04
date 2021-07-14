@@ -22,7 +22,7 @@ function setup () {
 
     // data = [];
     // for ( let i = 0; i < 12; i ++) {
-    //     var x = Math.floor ( Math.random () * height );
+    //     var x = Math.floor ( Math.random () * width );
     //     var y = Math.floor ( Math.random () * height );
     //     data.push ([x, y]) ;
 
@@ -33,15 +33,15 @@ function setup () {
     // }
 
     // Draw from data 
-    // for ( let i = 0; i < data.length; i ++) {
-    //     var x = data[i][0]
-    //     var y = data[i][1]
-    //     console.log(x, y)
-    //     fill (255 , 255 , 255);
-    //     circle (x, height - y, 7) ; // 200 -y para q se dibuje apropiadamente
-    //     textSize (8) ;
-    //     text(x + ',' + y, x + 5, height - y);// 200 -y para q se dibuje apropiadamente
-    // }
+    for ( let i = 0; i < data.length; i ++) {
+        var x = data[i][0]
+        var y = data[i][1]
+        console.log(x, y)
+        fill (255 , 255 , 255);
+        circle (x, height - y, 7) ; // 200 -y para q se dibuje apropiadamente
+        textSize (8) ;
+        text(x + ',' + y, x + 5, height - y);// 200 -y para q se dibuje apropiadamente
+    }
     
     root = build_kdtree(data);
     console.log(root);
@@ -58,7 +58,11 @@ function setup () {
 		results.slice(0, count);
     console.log('closest_point', results)
 
-
+    let found = []
+    var rectangle = [[0, 100], [0, 100]] // xmin xmax, ymin ymax
+    range_query_rect(root, rectangle, found)
+    console.log('range_query_rect', found)
+    
 }
 
 function draw(){
@@ -86,7 +90,7 @@ function draw(){
         text(x + ',' + y, x + 5, height - y);// 200 -y para q se dibuje apropiadamente
     }
 
-    // Draw query rect 
+    // Query rect -------------------------
     stroke(0,255,0);
     rectMode(CENTER);
     noFill();
@@ -101,7 +105,6 @@ function draw(){
     // console.log('mouseX', mouseX, 'mouseY', mouseY)
     // console.log('p1', xMin, yMin, 'p2', xMax, yMax)
 
-    // Query rect 
     let found = []
     var rectangle = [[xMin, xMax], [yMin, yMax]]
     range_query_rect(root, rectangle, found)
@@ -112,5 +115,5 @@ function draw(){
         fill (0 , 255 , 0);
         circle (x, height - y, 7); 
     }
- 
+
 }
