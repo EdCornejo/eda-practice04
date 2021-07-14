@@ -153,27 +153,6 @@ function build_kdtree(points, depth = 0){
 
 function range_query_circle(node , center , radio , queue , depth = 0) { }
 
-function range_query_orthogonal(node , rect , found , depth = 0) { 
-    if (node === null)
-        return;
-    var axis = depth % k;
-    if (node.point[axis] < rect[axis][0]){
-        range_query_orthogonal(node.right, rect, found, depth+1)
-        return
-    }
-    if (node.point[axis] > rect[axis][1]) {
-        range_query_orthogonal(node.left, rect, found, depth+1)
-        return
-    }
-    x = node.point.x
-    y = node.point.y
-    if (!(rect[0][0]>x || rect[0][1]<x || rect[1][0]>y || rect[1][1]<y)) { // test node in rect
-        found.append(node.point)
-        range_query_orthogonal(node.left, rect, found, depth+1)
-        range_query_orthogonal(node.right, rect, found, depth+1)
-    }
-}
-
 function contains(rect, point) {
     var point_inf = rect[0] // inferior izquierdo del rectangulo
     var point_sup = rect[1] // superior derecho del rectangulo
@@ -184,34 +163,28 @@ function contains(rect, point) {
         point[1]<=point_sup[1]);
 }
 
-// function contains2(rect, point, axis) {
-//     return (
-//         point[axis]>=rect[0][axis] &&
-//         point[axis]<=rect[1][axis]);
-// }
-
 function range_query_rect(node , rect , found , depth = 0) { 
-    if (node === null)
+    if (node === null) {
         return;
+    }
     var axis = depth % k;
-    // if (node.point[axis] < rect[axis][0]){
-    //     range_query_rect(node.right, rect, found, depth+1)
-    //     return
-    // }
-    // if (node.point[axis] > rect[axis][1]) {
-    //     range_query_rect(node.left, rect, found, depth+1)
-    //     return
-    // }
-    // x = node.point.x
-    // y = node.point.y
-    console.log('@', node.point)
-    console.log('@', contains(rect, node.point))
-    if (contains(rect, node.point)) { // test node in rect
+    if (node.point[axis] < rect[axis][0]){
+        range_query_rect(node.right, rect, found, depth+1)
+        return
+    }
+    if (node.point[axis] > rect[axis][1]) {
+        range_query_rect(node.left, rect, found, depth+1)
+        return
+    }
+    let x = node.point[0]
+    let y = node.point[1]
+    if (!(rect[0][0]>x || rect[0][1]<x || rect[1][0]>y || rect[1][1]<y)) { // test node in rect
         found.push(node.point)
     }
-    range_query_rect(node.right, rect, found, depth+1)
     range_query_rect(node.left, rect, found, depth+1)
+    range_query_rect(node.right, rect, found, depth+1)
 }
+
 
 // digraph G {
 //     "106 ,189 " -> "6 ,114";
