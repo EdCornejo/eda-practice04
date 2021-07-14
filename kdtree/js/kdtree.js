@@ -32,6 +32,7 @@ function closest_point_brute_force(points, point){
     console.log('best_distance', best_distance)
     return best_point;
 }
+
 function naive_closest_point(node, point, depth = 0, best = null){
     //algorithm
     //1. best = min(distance(point, node.point), best)
@@ -52,7 +53,6 @@ function naive_closest_point(node, point, depth = 0, best = null){
         next_branch = node.right
     return  naive_closest_point(next_branch, point, depth +1, next_best);
 }
-
 
 function closest_point(node , point , count, depth = 0, results) { 
     if (node === null)
@@ -108,6 +108,7 @@ function getHeight(node) {
     var rh = getHeight(node.right);
     return 1 + max(lh,rh);
 }
+
 function generate_dot(node){
     if (node === null){
         return "";
@@ -150,7 +151,6 @@ function build_kdtree(points, depth = 0){
     return node;
 }
 
-
 function range_query_circle(node , center , radio , queue , depth = 0) { }
 
 function contains(rect, point) {
@@ -184,42 +184,3 @@ function range_query_rect(node , rect , found , depth = 0) {
     range_query_rect(node.left, rect, found, depth+1)
     range_query_rect(node.right, rect, found, depth+1)
 }
-
-
-// digraph G {
-//     "106 ,189 " -> "6 ,114";
-//     "6 ,114" -> " 90 ,102";
-//     "90 ,102 " -> "21 ,84";
-//     "6 ,114" -> " 84 ,138";
-//     "84 ,138 " -> "5 ,150";
-//     "106 ,189 " -> "148 ,85 ";
-//     "148 ,85 " -> "181 ,45 ";
-//     "181 ,45 " -> "161 ,29 ";
-//     "148 ,85 " -> "158 ,120 ";
-// }
-
-
-
-
-// var data = [
-//     [40 ,70] ,
-//     [70 ,130] ,
-//     [90 ,40] ,
-//     [110 , 100] ,
-//     [140 ,110] ,
-//     [160 , 100]
-// ];
-
-// var point = [140 ,90]; // query
-
-
-// var data = [
-//     [40 ,70] ,
-//     [70 ,130] ,
-//     [90 ,40] ,
-//     [110 , 100] ,
-//     [140 ,110] ,
-//     [160 , 100] ,
-//     [150 , 30]
-// ];
-// var point = [140 ,90]; // query
