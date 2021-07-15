@@ -153,8 +153,6 @@ function build_kdtree(points, depth = 0){
     return node;
 }
 
-function range_query_circle(node , center , radio , queue , depth = 0) { }
-
 function contains(rect, point) {
     var point_inf = rect[0] // inferior izquierdo del rectangulo
     var point_sup = rect[1] // superior derecho del rectangulo
@@ -186,3 +184,89 @@ function range_query_rect(node , rect , found , depth = 0) {
     range_query_rect(node.left, rect, found, depth+1)
     range_query_rect(node.right, rect, found, depth+1)
 }
+
+function kdCompare(root, point, depth){
+    let dim = depth % k;
+    if(point[dim] <= root.point[dim]){
+        return -1;
+    } else {
+        return 1;
+    }
+}
+
+function range_query_circle(root , center , radio , queue , depth = 0) {
+    if(root == null) {
+        return null;
+    }
+    // console.log(root, [center[0], center[1]], radio);
+    // console.log(kdCompare(root, [center[0]-radio, center[1]-radio], depth));
+    if(kdCompare(root, [center[0]-radio, center[1]-radio], depth) > 0){
+        range_query_circle(root.right, center, radio, queue, depth + 1)
+        return null;
+    }
+    if(kdCompare(root, [center[0]+radio, center[1]+radio], depth) < 0){
+        range_query_circle(root.left, center, radio, queue, depth + 1)
+        return null;
+    }
+    if(distanceSquared(center, root.point) <= radio){
+        queue.push(root.point)
+    }
+    range_query_circle(root.left, center, radio, queue, depth + 1)
+    range_query_circle(root.right, center, radio, queue, depth + 1)
+    return null;
+}
+
+
+let INF = 9999999999999;
+
+function update_neighbors(p0, p, neighbors, n) {
+    d = distanceSquared(p, p0)
+
+    console.log(p, p0)
+    console.log('d', d)
+    // for (i, x in enumerate(neighbors)) {
+    for (let i = 0; i < neighbors.length; i ++) {
+    var x =  neighbors[i]
+        if (i == n) {
+            return neighbors[n-1][1]
+        }
+        if (d < x[1]) {
+            neighbors.splice(i, 0, [p0, d])
+            if (neighbors.length < n) {
+                return INF
+            }
+            return neighbors[n-1][1]
+        }
+    }
+    neighbors.push([p0, d])
+    return INF
+}
+
+let maxdist
+
+function nnquery(t, p, n, found, depth=0) {
+    if (t == null) {
+        return null
+    }
+    if (t.left == null & t.right == null) {
+        maxdist = update_neighbors(t.point, p, found, n)
+        return
+    }
+    axis = depth % p.length
+    var nearer_tree
+    var farther_tree
+    if (p[axis] < t.point[axis]) {
+        nearer_tree = t.left
+        farther_tree = t.right
+    } else {
+        nearer_tree = t.right
+        farther_tree = t.left
+
+    }
+    nnquery(nearer_tree, p, n, found, depth+1)
+    maxdist = update_neighbors(t.point, p, found, n)
+    if (Math.abs(t.point[axis]-p[axis]) < maxdist) // must check the far side
+        nnquery(farther_tree, p, n, found, depth+1)
+    return
+}
+
