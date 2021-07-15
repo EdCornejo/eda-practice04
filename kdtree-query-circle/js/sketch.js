@@ -47,7 +47,8 @@ function setup () {
     console.log(root);
     console.log("digraph G {\n" + generate_dot(root) + "}");
 
-    var point = [140 ,90]; // query
+    // var point = [140 ,90]; // query
+    var point = [200 , 200]; // query
     console.log("Este!: ", closest_point_brute_force(data, point))
     console.log(naive_closest_point(root, point))
 
@@ -68,8 +69,9 @@ function setup () {
     // range_query_circle(root, center, 30, found)
     // console.log('range_query_circle', found)
 
-    let found = []
-    nnquery(root, [200, 200], 1, found)
+    let found = kdtree_nearest_neighbor_query(root, point, 3)
+
+
     console.log('nnquery', found)
 
 
