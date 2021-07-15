@@ -48,15 +48,15 @@ function setup () {
     console.log("digraph G {\n" + generate_dot(root) + "}");
 
     var point = [140 ,90]; // query
-    console.log(closest_point_brute_force(data, point))
+    console.log("Este!: ", closest_point_brute_force(data, point))
     console.log(naive_closest_point(root, point))
 
-    var count = 4;
+    var count = 1;
 	var results = [];
-	closest_point(root, point, count, 0, results);
-	if (results.length > count)
-		results.slice(0, count);
-    console.log('----closest_point', results)
+	knn_closest_point(root, point, count, 0, results);
+	// if (results.length > count)
+	// 	results.slice(0, count);
+    console.log('----knn_closest_point', results)
 
     // let found = []
     // var rectangle = [[0, 100], [0, 100]] // xmin xmax, ymin ymax

@@ -54,7 +54,7 @@ function naive_closest_point(node, point, depth = 0, best = null){
     return  naive_closest_point(next_branch, point, depth +1, next_best);
 }
 
-function closest_point(node, point, count, depth = 0, results) {
+function knn_closest_point(node , point ,count, depth = 0, results) {
     if (node === null)
         return;
     var axis = depth % k;
@@ -91,12 +91,12 @@ function closest_point(node, point, count, depth = 0, results) {
     // target has our most likely nearest point, we go down that side of the
     // tree first
     if (target)
-        this.closest_point(target, point, count, depth + 1, results);
+        this.knn_closest_point(target, point, count, depth + 1, results);
 
     // _search the opposite direction, only if there is potentially a better
     // value than the longest distance we already have in our _search results
     if ((opposite) && (distanceSquared(opposite.point, point) <= results[results.length - 1].distance))
-        this.closest_point(opposite, point, count, depth + 1, results);
+        this.knn_closest_point(opposite, point, count, depth + 1, results);
 }
 
 function getHeight(node) {
@@ -192,7 +192,7 @@ function kdCompare(root, point, depth){
     }
 }
 
-function range_query_circle(root , center , radio , queue , depth = 0) {
+function range_query_circle(root , center , radio , queue , depth = 0, ) {
     if(root == null) {
         return null;
     }
