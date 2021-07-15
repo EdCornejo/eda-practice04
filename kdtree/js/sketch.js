@@ -52,10 +52,10 @@ function setup () {
     console.log(naive_closest_point(root, point))
 
     var count = count || 1;
-	var results = [];
-	closest_point(root, point, count, 0, results);
-	if (results.length > count)
-		results.slice(0, count);
+    var results = [];
+    closest_point(root, point, count, 0, results);
+    if (results.length > count)
+        results.slice(0, count);
     console.log('closest_point', results)
 
     let found = []
