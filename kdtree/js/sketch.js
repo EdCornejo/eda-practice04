@@ -33,15 +33,15 @@ function setup () {
     // }
 
     // Draw from data 
-    for ( let i = 0; i < data.length; i ++) {
-        var x = data[i][0]
-        var y = data[i][1]
-        console.log(x, y)
-        fill (255 , 255 , 255);
-        circle (x, height - y, 7) ; // 200 -y para q se dibuje apropiadamente
-        textSize (8) ;
-        text(x + ',' + y, x + 5, height - y);// 200 -y para q se dibuje apropiadamente
-    }
+    // for ( let i = 0; i < data.length; i ++) {
+    //     var x = data[i][0]
+    //     var y = data[i][1]
+    //     console.log(x, y)
+    //     fill (255 , 255 , 255);
+    //     circle (x, height - y, 7) ; // 200 -y para q se dibuje apropiadamente
+    //     textSize (8) ;
+    //     text(x + ',' + y, x + 5, height - y);// 200 -y para q se dibuje apropiadamente
+    // }
     
     root = build_kdtree(data);
     console.log(root);
@@ -58,11 +58,21 @@ function setup () {
 		results.slice(0, count);
     console.log('closest_point', results)
 
-    let found = []
-    var rectangle = [[0, 100], [0, 100]] // xmin xmax, ymin ymax
-    range_query_rect(root, rectangle, found)
-    console.log('range_query_rect', found)
+    // let found = []
+    // var rectangle = [[0, 100], [0, 100]] // xmin xmax, ymin ymax
+    // range_query_rect(root, rectangle, found)
+    // console.log('range_query_rect', found)
     
+    // let found = []
+    // var center = [50, 50]
+    // range_query_circle(root, center, 30, found)
+    // console.log('range_query_circle', found)
+
+    let found = []
+    nnquery(root, [200, 200], 1, found) 
+    console.log('nnquery', found)
+
+
 }
 
 function draw(){
@@ -91,29 +101,45 @@ function draw(){
     }
 
     // Query rect -------------------------
+    // stroke(0,255,0);
+    // rectMode(CENTER);
+    // noFill();
+    // var rectWidth = 100
+    // var rectHeight = 100 
+
+    // rect(mouseX, mouseY, rectWidth, rectHeight);
+    // var xMin = mouseX - rectWidth/2;
+    // var yMin = height - (mouseY + rectHeight/2);
+    // var xMax = mouseX + rectWidth/2;
+    // var yMax = height - (mouseY - rectHeight/2);
+    // // console.log('mouseX', mouseX, 'mouseY', mouseY)
+    // // console.log('p1', xMin, yMin, 'p2', xMax, yMax)
+
+    // let found = []
+    // var rectangle = [[xMin, xMax], [yMin, yMax]]
+    // range_query_rect(root, rectangle, found)
+    // // console.log('found', found)
+    // for ( let i = 0; i < found.length; i ++) {
+    //     var x = found[i][0];
+    //     var y = found[i][1];
+    //     fill (0 , 255 , 0);
+    //     circle (x, height - y, 7); 
+    // }
+
+    // Query circle -------------------------------
     stroke(0,255,0);
-    rectMode(CENTER);
     noFill();
-    var rectWidth = 100
-    var rectHeight = 100 
-
-    rect(mouseX, mouseY, rectWidth, rectHeight);
-    var xMin = mouseX - rectWidth/2;
-    var yMin = height - (mouseY + rectHeight/2);
-    var xMax = mouseX + rectWidth/2;
-    var yMax = height - (mouseY - rectHeight/2);
-    // console.log('mouseX', mouseX, 'mouseY', mouseY)
-    // console.log('p1', xMin, yMin, 'p2', xMax, yMax)
-
+    var radio = 50;
+    circle(mouseX, mouseY, radio * 2);
     let found = []
-    var rectangle = [[xMin, xMax], [yMin, yMax]]
-    range_query_rect(root, rectangle, found)
-    // console.log('found', found)
+    var center = [mouseX, height - mouseY]
+    range_query_circle(root, center, 50, found)
     for ( let i = 0; i < found.length; i ++) {
         var x = found[i][0];
         var y = found[i][1];
         fill (0 , 255 , 0);
         circle (x, height - y, 7); 
     }
+    
 
 }
