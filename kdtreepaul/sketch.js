@@ -13,10 +13,10 @@ function setup () {
             line (0 , y, width , y);
         }
     }
+//Ingresa datos aleatorios
+    /* var data = [];
 
-    var data = [];
-
-    for ( let i = 0; i < 12; i ++) {
+    for ( let i = 0; i < 6; i ++) {
         var x = Math.floor ( Math.random () * height );
         var y = Math.floor ( Math.random () * height );
         data.push ([x, y]) ;
@@ -26,7 +26,26 @@ function setup () {
         textSize (8) ;
         text(x + ',' + y, x + 5, height - y);// 200 -y para q se dibuje apropiadamente
 
+    } */
+    var data=[
+        [40,70],
+        [70,130],
+        [90,40],
+        [110,100],
+        [140,110],
+        [160,100]
+    ];
+    for ( let i = 0; i < 6; i ++) {
+        var x=data[i][0];
+        var y=data[i][1];
+        
+        fill (255 , 255 , 255) ;
+        circle (x, height - y, 7) ; // 200 -y para q se dibuje apropiadamente
+        textSize (8) ;
+        text(x + ',' + y, x + 5, height - y);// 200 -y para q se dibuje apropiadamente
+
     }
+   // var point=[140,90];
 
     var root = build_kdtree(data) ;
     console.log(root);

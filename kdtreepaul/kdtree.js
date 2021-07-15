@@ -103,6 +103,7 @@ function build_kdtree(points, depth = 0){
 
     return node;
 }
+
 function closer_distance(pivot,p1,p2){
     if (p1==null){
         return p2;
@@ -123,7 +124,6 @@ function closest_point(node , point , depth = 0) {
         return null;
     
     var axis = depth % k;
-    var next_best = null;
     var next_branch = null;
     var opposite_branch=null;
     if (point[axis]<node.point[axis]){
@@ -137,27 +137,8 @@ function closest_point(node , point , depth = 0) {
     best=closer_distance(point, closest_point(next_branch,point, depth +1), node.point);
     if (distanceSquared(point,best)>Math.abs(point[axis]-node.point[axis])){
         best=closer_distance(point, closest_point(opposite_branch,point, depth +1), best);
-    }return{
-        best
-    }
-
+    }return best;
 }
-//function naive_closest_point(node, point, depth = 0, best = null){
-/* if (node === null)
-        return best;
-    var axis = depth % k;
-    var next_best = null; //next best point
-    var next_branch = null; //next node brach to look for
-    if (best === null || (distanceSquared(best, point) > distanceSquared(node.point, point)))
-        next_best = node.point;
-    else
-        next_best   = best;
-    if (point[axis] < node.point[axis])
-        next_branch = node.left
-    else
-        next_branch = node.right
-    return  naive_closest_point(next_branch, point, depth +1, next_best); */
-
 function range_query_circle(node , center , radio , queue , depth = 0) { }
 
 // digraph G {
