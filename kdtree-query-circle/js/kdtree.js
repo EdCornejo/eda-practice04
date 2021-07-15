@@ -218,13 +218,13 @@ function range_query_circle(root , center , radio , queue , depth = 0, ) {
 let INF = 9999999999999;
 
 function update_neighbors(p0, p, neighbors, n) {
-    d = distanceSquared(p, p0)
+    let d = distanceSquared(p, p0)
 
     console.log(p, p0)
     console.log('d', d)
     // for (i, x in enumerate(neighbors)) {
     for (let i = 0; i < neighbors.length; i ++) {
-    var x =  neighbors[i]
+        var x =  neighbors[i]
         if (i == n) {
             return neighbors[n-1][1]
         }
@@ -268,3 +268,9 @@ function nnquery(t, p, n, found, depth=0) {
     return
 }
 
+function kdtree_nearest_neighbor_query(t, p, n=1) {
+    let nearest_neighbors = []
+    nnquery(t, p, n, nearest_neighbors)
+    console.log(nearest_neighbors);
+    return nearest_neighbors.slice(0, n);
+}
