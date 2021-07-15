@@ -215,6 +215,8 @@ function range_query_circle(root , center , radio , queue , depth = 0, ) {
 }
 
 
+// KNN Algorithm - alternative to knn_closest_point
+
 let INF = 9999999999999;
 
 function update_neighbors(p0, p, neighbors, n) {
