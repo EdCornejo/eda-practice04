@@ -13,7 +13,7 @@ function distanceSquared(point1, point2 ){
     let distance = 0;
     for (let i = 0; i < k; i ++)
         distance += Math.pow ((point1 [i] - point2 [i]) , 2) ;
-    return Math.sqrt ( distance );
+    return distance;
 }
 
 function closest_point_brute_force(points, point){
@@ -104,11 +104,43 @@ function build_kdtree(points, depth = 0){
     return node;
 }
 
-function closest_point(node , point ) { 
-    var node=node;
-    var point=point;
-    var Npoint=naive_closest_point(node, point);
-    return  Npoint;
+function closer_distance(pivot,p1,p2){
+    if (p1==null){
+        return p2;
+    }
+    if (p2==null){
+        return p1;
+    }
+    d1=distanceSquared(pivot,p1);
+    d2=distanceSquared(pivot,p2);
+    if (d1<d2){
+        return p1;
+    }else{
+        return p2;
+    }      
+}
+
+function closest_point(node , point ,depth=0) { 
+    if (node===null)
+        return null;
+    var axis = depth % k;
+
+    var next_branch = null;
+    var opposite_branch=null;
+
+    if (point[axis]<node.point[axis]){
+        next_branch = node.left;
+        opposite_branch=node.right;
+    }
+    else{
+        next_branch = node.right;
+        opposite_branch=node.left;
+    }
+    best=closer_distance(point, closest_point(next_branch,point, depth +1), node.point);
+    if (distanceSquared(point,best)>Math.pow(point[axis]-node.point[axis],2)){
+        best=closer_distance(point, closest_point(opposite_branch,point, depth +1), best);
+    }
+    return best;
 
 }
 
@@ -137,26 +169,26 @@ function closest_point(node , point ) {
 
 
 
- /* var data = [
-     [40 ,70] ,
-     [70 ,130] ,
-     [90 ,40] ,
-    [110 , 100] ,
-     [140 ,110] ,
-     [160 , 100]
- ]; */
+// var data = [
+//     [40 ,70] ,
+//     [70 ,130] ,
+//     [90 ,40] ,
+//     [110 , 100] ,
+//     [140 ,110] ,
+//     [160 , 100]
+// ];
 
 // var point = [140 ,90]; // query
 
 
- /* var data = [
-     [40 ,70] ,
-     [70 ,130] ,
-     [90 ,40] ,
-     [110 , 100] ,
-     [140 ,110] ,
-     [160 , 100] ,
-     [150 , 30]
- ]; */
+// var data = [
+//     [40 ,70] ,
+//     [70 ,130] ,
+//     [90 ,40] ,
+//     [110 , 100] ,
+//     [140 ,110] ,
+//     [160 , 100] ,
+//     [150 , 30]
+// ];
 
 // var point = [140 ,90]; // query
