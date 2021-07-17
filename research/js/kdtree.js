@@ -1,11 +1,12 @@
 k = 144;
 
 class Node {
-    constructor(point , axis ){
+    constructor(point, label, axis){
         this.point = point;
         this.left = null;
         this.right = null;
         this.axis = axis;
+        this.label = label;
     }
 }
 
@@ -56,7 +57,7 @@ function naive_closest_point(node, point, depth = 0, best = null){
     return  naive_closest_point(next_branch, point, depth +1, next_best);
 }
 
-function closest_point(node , point , count, depth = 0, results) { 
+function closest_point(node , point , count, depth = 0, results) {
     if (node === null)
         return;
     var axis = depth % k;
@@ -64,25 +65,25 @@ function closest_point(node , point , count, depth = 0, results) {
     var i = results.length
     if (i == 0) {
         results.push({
-            'node': node, 
-            'distance': distance, 
+            'node': node,
+            'distance': distance,
         })
     }
     for (i = 0; i < results.length; i++) {
-		if (distance < results[i].distance)
-			break;
-	}
+        if (distance < results[i].distance)
+            break;
+    }
     // splice in our result
     if ((i >= 0) &&  (i <= count))
     {
         // console.log('splicing in ' + node.point + ' with dist=' + distance + ' at ' + i);
         results.splice(i, 0, {
-            'node': node, 
-            'distance': distance, 
+            'node': node,
+            'distance': distance,
         });
     }
     // get rid of any extra results
-	while (results.length > count)
+    while (results.length > count)
     results.pop();
     // whats got the got best _search result? left or right?
     var goLeft = node.point[axis] < point[axis];
@@ -125,28 +126,29 @@ function generate_dot(node){
         tmp += generate_dot(node.right);
     }
     return tmp;
-} 
+}
 
-function build_kdtree(points, depth = 0){
-    let n = points.length;
+function build_kdtree(data, depth = 0){
+    let n = data.length;
     let axis = depth % k;
     if (n <= 0){
         return null;
     }
     if (n == 1){
-        return new Node(points[0], axis)
+        return new Node(data[0].point, data[0].label, axis)
     }
-    var median = Math.floor(points.length / 2);
+    // console.log('data[0]', data[0])
+    var median = Math.floor(n / 2);
     // sort by the axis
-    points.sort(function(a, b)
+    data.sort(function(a, b)
     {
-        return a[axis] - b[axis];
+        return a.point[axis] - b.point[axis];
     });
     //console.log(points);
-    var left = points.slice(0, median);
-    var right = points.slice(median + 1);
+    var left = data.slice(0, median);
+    var right = data.slice(median + 1);
     //console.log(right);
-    var node = new Node(points[median], axis);
+    var node = new Node(data[median].point, data[median].label, axis);
     node.left = build_kdtree(left, depth + 1);
     node.right = build_kdtree(right, depth + 1);
 
@@ -163,7 +165,7 @@ function contains(rect, point) {
         point[1]<=point_sup[1]);
 }
 
-function range_query_rect(node , rect , found , depth = 0) { 
+function range_query_rect(node , rect , found , depth = 0) {
     if (node === null) {
         return;
     }
@@ -219,10 +221,11 @@ function range_query_circle(root , center , radio , queue , depth = 0) {
 
 let INF = 9999999999999;
 
-function update_neighbors(p0, p, neighbors, n) {
-    d = distanceSquared(p, p0)
+function update_neighbors(t, p, neighbors, n) {
 
-    // console.log(p, p0)
+    d = distanceSquared(p, t.point)
+
+    // console.log('distance', p, t.point)
     // console.log('d', d)
     // for (i, x in enumerate(neighbors)) {
     for (let i = 0; i < neighbors.length; i ++) {
@@ -231,25 +234,26 @@ function update_neighbors(p0, p, neighbors, n) {
             return neighbors[n-1][1]
         }
         if (d < x[1]) {
-            neighbors.splice(i, 0, [p0, d])
+            neighbors.splice(i, 0, [t.point, d, t.label])
             if (neighbors.length < n) {
                 return INF
             }
             return neighbors[n-1][1]
         }
     }
-    neighbors.push([p0, d])
+    neighbors.push([t.point, d, t.label])
     return INF
 }
 
 let maxdist
 
 function nnquery(t, p, n, found, depth=0) {
+    // console.log('t', t)
     if (t == null) {
         return null
     }
     if (t.left == null & t.right == null) {
-        maxdist = update_neighbors(t.point, p, found, n)
+        maxdist = update_neighbors(t, p, found, n)
         return
     }
     axis = depth % p.length
@@ -264,7 +268,7 @@ function nnquery(t, p, n, found, depth=0) {
 
     }
     nnquery(nearer_tree, p, n, found, depth+1)
-    maxdist = update_neighbors(t.point, p, found, n)
+    maxdist = update_neighbors(t, p, found, n)
     if (Math.abs(t.point[axis]-p[axis]) < maxdist) // must check the far side
         nnquery(farther_tree, p, n, found, depth+1)
     return
