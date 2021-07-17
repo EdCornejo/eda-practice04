@@ -225,8 +225,8 @@ function update_neighbors(t, p, neighbors, n) {
     
     d = distanceSquared(p, t.point)
 
-    console.log('distance', p, t.point)
-    console.log('d', d)
+    // console.log('distance', p, t.point)
+    // console.log('d', d)
     // for (i, x in enumerate(neighbors)) {
     for (let i = 0; i < neighbors.length; i ++) {
     var x =  neighbors[i]
@@ -248,7 +248,7 @@ function update_neighbors(t, p, neighbors, n) {
 let maxdist
 
 function nnquery(t, p, n, found, depth=0) {
-    console.log('t', t)
+    // console.log('t', t)
     if (t == null) {
         return null
     }
@@ -277,6 +277,6 @@ function nnquery(t, p, n, found, depth=0) {
 function kdtree_nearest_neighbor_query(t, p, n=1) {
     let nearest_neighbors = []
     nnquery(t, p, n, nearest_neighbors)
-    console.log(nearest_neighbors);
+    // console.log(nearest_neighbors);
     return nearest_neighbors.slice(0, n);
 }

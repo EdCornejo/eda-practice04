@@ -223,7 +223,7 @@ function setup () {
         {"point": [6.3, 2.5, 5.0, 1.9], "label": "Iris-virginica"},
         {"point": [6.5, 3.0, 5.2, 2.0], "label": "Iris-virginica"},
         {"point": [6.2, 3.4, 5.4, 2.3], "label": "Iris-virginica"},
-        {"point": [5.9, 3.0, 5.1, 1.8], "label": "Iris-virginica"}
+        // {"point": [5.9, 3.0, 5.1, 1.8], "label": "Iris-virginica"}
     ]
 
 
@@ -231,8 +231,11 @@ function setup () {
     console.log(root);
     console.log("digraph G {\n" + generate_dot(root) + "}");
 
-    var point = [7.0, 3.2, 4.7, 1.4]
-    var iris = kdtree_nearest_neighbor_query(root, point, 5)
+    // var point = [7.0, 3.2, 4.7, 1.4] # versicolor
+    // var point = [7.0, 3.2, 4.7, 1.3] 
+    var point = [5.9, 3.0, 5.1, 1.8]
+    console.log('point', point, 'virginica')
+    var iris = kdtree_nearest_neighbor_query(root, point, 10)
     console.log(iris)
 
 
