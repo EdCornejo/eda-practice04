@@ -326,18 +326,21 @@ function setup () {
 
     // console.log(results);
     // console.log(getMax(results));
-    // var counter = [];
-    // for(let i = 0 ; i < data_test.length ; i++){
-    //     let results = kdtree_nearest_neighbor_query(root, data_test[i].point, 10)
-    //     let prediction = {0:0, 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0};
-
-    //     for(let i = 0 ; i < results.length ; i++){
-    //         prediction[results[i][0].label]++;
-    //     }
-    //     // debugger;
-    //     counter.push([getMax(prediction)[0], data_test[i].label]);
-    // }
-    // console.log(counter)
+    var counter = 0;
+    for(let i = 0 ; i < data_test.length ; i++){
+        let results = kdtree_nearest_neighbor_query(root, data_test[i].point, 10)
+        let prediction = {0:0, 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0};
+        for(let i = 0 ; i < results.length ; i++){
+            prediction[results[i][2]]++;
+        }
+        // debugger;
+        // debugger;
+        if (getMax(prediction)[0] == data_test[i].label){
+            counter++;
+        }
+    }
+    console.log(counter)
+    console.log("Acc: ", counter/data_test.length);
 
     // let isCorrect = 0;
     // for(let i = 0 ; i < counter.length ; i++){
