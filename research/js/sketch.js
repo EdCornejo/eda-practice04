@@ -316,16 +316,11 @@ function setup () {
             0.036803245544433594,
             0.006506807636469603
         ];
-    var digits = kdtree_nearest_neighbor_query(root, point, 10) // expected 3
+    var digits = kdtree_nearest_neighbor_query(root, point, 10)
     console.log(digits);
-    // let results = {0:0, 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0};
 
-    // for(let i = 0 ; i < digits.length ; i++){
-    //     results[digits[i][0].label]++;
-    // }
+    // test with test data
 
-    // console.log(results);
-    // console.log(getMax(results));
     var counter = 0;
     for(let i = 0 ; i < data_test.length ; i++){
         let results = kdtree_nearest_neighbor_query(root, data_test[i].point, 10)
@@ -333,21 +328,11 @@ function setup () {
         for(let i = 0 ; i < results.length ; i++){
             prediction[results[i][2]]++;
         }
-        // debugger;
-        // debugger;
         if (getMax(prediction)[0] == data_test[i].label){
             counter++;
         }
     }
     console.log(counter)
     console.log("Acc: ", counter/data_test.length);
-
-    // let isCorrect = 0;
-    // for(let i = 0 ; i < counter.length ; i++){
-    //     if (counter[i][0] == counter[i][1])
-    //         isCorrect++;
-    // }
-    // console.log("Correct: ", isCorrect, "Total:", counter.length);
-    // console.log("Acc: ", isCorrect/counter.length);
 
 }
