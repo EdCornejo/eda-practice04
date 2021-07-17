@@ -332,7 +332,8 @@ function setup () {
             counter++;
         }
     }
-    console.log(counter)
+    console.log('Total:', data_test.length)
+    console.log('Correct:', counter)
     console.log("Acc: ", counter/data_test.length);
 
 }
