@@ -34,6 +34,30 @@ function build_kdtree(points, depth = 0){
 
     return node;
 }
+function getHeight(node) {
+    if (node === null){
+        return 0;
+    }
+    // find the height of each subtree
+    var lh = getHeight(node.left);
+    var rh = getHeight(node.right);
+    return 1 + max(lh,rh);
+} 
+function generate_dot(node){
+    if (node === null){
+        return "";
+    }
+    var tmp = '';
+    if (node.left != null){
+        tmp += '"' + node.point.toString() + '"' + ' -> ' + '"' + node.left.point.toString() + '"' + ';\n';
+        tmp += generate_dot(node.left);
+    }
+    if (node.right != null){
+        tmp += '"' + node.point.toString() + '"' + ' -> ' + '"' + node.right.point.toString() + '"' + ';\n';
+        tmp += generate_dot(node.right);
+    }
+    return tmp;
+} 
 
 function distanceSquared(point1, point2 ){
     let distance = 0;
@@ -79,34 +103,8 @@ function naive_closest_point(node, point, depth = 0, best = null){
         next_branch = node.right
     return  naive_closest_point(next_branch, point, depth +1, next_best);
 }
- function getHeight(node) {
-    if (node === null){
-        return 0;
-    }
-    // find the height of each subtree
-    var lh = getHeight(node.left);
-    var rh = getHeight(node.right);
-    return 1 + max(lh,rh);
-} 
- function generate_dot(node){
-    if (node === null){
-        return "";
-    }
-    var tmp = '';
-    if (node.left != null){
-        tmp += '"' + node.point.toString() + '"' + ' -> ' + '"' + node.left.point.toString() + '"' + ';\n';
-        tmp += generate_dot(node.left);
-    }
-    if (node.right != null){
-        tmp += '"' + node.point.toString() + '"' + ' -> ' + '"' + node.right.point.toString() + '"' + ';\n';
-        tmp += generate_dot(node.right);
-    }
-    return tmp;
-} 
-
-
-
-function closer_distance(pivot,p1,p2){
+ 
+ function closer_distance(pivot,p1,p2){
     if (p1==null){
         return p2;
     }
@@ -145,52 +143,3 @@ function closest_point(node , point ,depth=0) {
     return best;
 
 }
-
-
-// digraph G {
-//     "106 ,189 " -> "6 ,114";
-//     "6 ,114" -> " 90 ,102";
-//     "90 ,102 " -> "21 ,84";
-//     "6 ,114" -> " 84 ,138";
-//     "84 ,138 " -> "5 ,150";
-//     "106 ,189 " -> "148 ,85 ";
-//     "148 ,85 " -> "181 ,45 ";
-//     "181 ,45 " -> "161 ,29 ";
-//     "148 ,85 " -> "158 ,120 ";
-// }
-/* digraph G {
-    "4,13,5" -> "3,4,9";
-    "3,4,9" -> "2,2,10";
-    "2,2,10" -> "4,1,6";
-    "3,4,9" -> "2,6,8";
-    "4,13,5" -> "5,9,10";
-    "5,9,10" -> "14,3,7";
-    "14,3,7" -> "8,2,1";
-    "5,9,10" -> "7,9,6";
-    } */
-
-
-
-// var data = [
-//     [40 ,70] ,
-//     [70 ,130] ,
-//     [90 ,40] ,
-//     [110 , 100] ,
-//     [140 ,110] ,
-//     [160 , 100]
-// ];
-
-// var point = [140 ,90]; // query
-
-
-// var data = [
-//     [40 ,70] ,
-//     [70 ,130] ,
-//     [90 ,40] ,
-//     [110 , 100] ,
-//     [140 ,110] ,
-//     [160 , 100] ,
-//     [150 , 30]
-// ];
-
-// var point = [140 ,90]; // query
