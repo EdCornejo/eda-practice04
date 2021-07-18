@@ -9,6 +9,32 @@ class Node {
     }
 }
 
+function build_kdtree(points, depth = 0){
+    let n = points.length;
+    let axis = depth % k;
+    if (n <= 0){
+        return null;
+    }
+    if (n == 1){
+        return new Node(points[0], axis)
+    }
+    var median = Math.floor(points.length / 2);
+    // sort by the axis
+    points.sort(function(a, b)
+    {
+        return a[axis] - b[axis];
+    });
+    //console.log(points);
+    var left = points.slice(0, median);
+    var right = points.slice(median + 1);
+    //console.log(right);
+    var node = new Node(points[median], axis);
+    node.left = build_kdtree(left, depth + 1);
+    node.right = build_kdtree(right, depth + 1);
+
+    return node;
+}
+
 function distanceSquared(point1, point2 ){
     let distance = 0;
     for (let i = 0; i < k; i ++)
@@ -78,31 +104,7 @@ function naive_closest_point(node, point, depth = 0, best = null){
     return tmp;
 } 
 
-function build_kdtree(points, depth = 0){
-    let n = points.length;
-    let axis = depth % k;
-    if (n <= 0){
-        return null;
-    }
-    if (n == 1){
-        return new Node(points[0], axis)
-    }
-    var median = Math.floor(points.length / 2);
-    // sort by the axis
-    points.sort(function(a, b)
-    {
-        return a[axis] - b[axis];
-    });
-    //console.log(points);
-    var left = points.slice(0, median);
-    var right = points.slice(median + 1);
-    //console.log(right);
-    var node = new Node(points[median], axis);
-    node.left = build_kdtree(left, depth + 1);
-    node.right = build_kdtree(right, depth + 1);
 
-    return node;
-}
 
 function closer_distance(pivot,p1,p2){
     if (p1==null){
