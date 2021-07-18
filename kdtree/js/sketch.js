@@ -1,8 +1,7 @@
 function setup () {
-    scalar=1;
-    var width = 200;
-    var height = 200;
-    createCanvas (width , height ) ;
+    var width = 400;
+    var height = 400;
+    createCanvas (width , height) ;
 
     background (0) ;
 
@@ -34,11 +33,17 @@ var data = [
         /* circle (x, height - y, 7) ; // 200 -y para q se dibuje apropiadamente
         textSize (10) ;
         text(x + ',' + y, x + 5, height - y);// 200 -y para q se dibuje apropiadamente */
-        circle (data[i][0]*scalar, (height - data[i][1]*scalar), 7) ; // 200 -y para q se dibuje apropiadamente
+        let x=data[i][0];
+        let y=data[i][1];
+        let _x=x*2
+        let _y=height-y*2;
+        circle (_x, _y, 7) ; // 200 -y para q se dibuje apropiadamente
+        //fill(125,125,125)
         textSize (10) ;
-        text(data[i][0] + ',' + data[i][1], (data[i][0])*scalar+5, height - (data[i][1])*scalar);// 200 -y para q se dibuje apropiadamente
-
+        text(x + ',' + y, _x, _y);// 200 -y para q se dibuje apropiadamente
+        
     }
+    scale(2);
     //console.log(data);
     var root = build_kdtree(data) ;
     console.log(root);
