@@ -53,7 +53,7 @@ function naive_closest_point(node, point, depth = 0, best = null){
         next_branch = node.right
     return  naive_closest_point(next_branch, point, depth +1, next_best);
 }
-/* function getHeight(node) {
+ function getHeight(node) {
     if (node === null){
         return 0;
     }
@@ -61,7 +61,7 @@ function naive_closest_point(node, point, depth = 0, best = null){
     var lh = getHeight(node.left);
     var rh = getHeight(node.right);
     return 1 + max(lh,rh);
-} */
+} 
  function generate_dot(node){
     if (node === null){
         return "";
