@@ -1,4 +1,4 @@
-/* //function evento6(){
+//function evento7(){
 let width = 500;
 let height = 300;
 
@@ -37,16 +37,6 @@ function setup () {
 	// 	results.slice(0, count);
     console.log('----knn_closest_point', results)
 
-    // let found = []
-    // var rectangle = [[0, 100], [0, 100]] // xmin xmax, ymin ymax
-    // range_query_rect(root, rectangle, found)
-    // console.log('range_query_rect', found)
-
-    // let found = []
-    // var center = [50, 50]
-    // range_query_circle(root, center, 30, found)
-    // console.log('range_query_circle', found)
-
     let found = kdtree_nearest_neighbor_query(root, point, 3)
 
 
@@ -81,32 +71,32 @@ function draw(){
     }
 
     // Query rect -------------------------
-    // stroke(0,255,0);
-    // rectMode(CENTER);
-    // noFill();
-    // var rectWidth = 100
-    // var rectHeight = 100
+     stroke(0,255,0);
+     rectMode(CENTER);
+     noFill();
+     var rectWidth = 100
+     var rectHeight = 100
 
-    // rect(mouseX, mouseY, rectWidth, rectHeight);
-    // var xMin = mouseX - rectWidth/2;
-    // var yMin = height - (mouseY + rectHeight/2);
-    // var xMax = mouseX + rectWidth/2;
-    // var yMax = height - (mouseY - rectHeight/2);
-    // // console.log('mouseX', mouseX, 'mouseY', mouseY)
-    // // console.log('p1', xMin, yMin, 'p2', xMax, yMax)
+     rect(mouseX, mouseY, rectWidth, rectHeight);
+     var xMin = mouseX - rectWidth/2;
+     var yMin = height - (mouseY + rectHeight/2);
+     var xMax = mouseX + rectWidth/2;
+     var yMax = height - (mouseY - rectHeight/2);
+     // console.log('mouseX', mouseX, 'mouseY', mouseY)
+     // console.log('p1', xMin, yMin, 'p2', xMax, yMax)
 
-    // let found = []
-    // var rectangle = [[xMin, xMax], [yMin, yMax]]
-    // range_query_rect(root, rectangle, found)
-    // // console.log('found', found)
-    // for ( let i = 0; i < found.length; i ++) {
-    //     var x = found[i][0];
-    //     var y = found[i][1];
-    //     fill (0 , 255 , 0);
-    //     circle (x, height - y, 7);
-    // }
+     let found = []
+     var rectangle = [[xMin, xMax], [yMin, yMax]]
+     range_query_rect(root, rectangle, found)
+     // console.log('found', found)
+     for ( let i = 0; i < found.length; i ++) {
+         var x = found[i][0];
+         var y = found[i][1];
+         fill (0 , 255 , 0);
+         circle (x, height - y, 7);
+     }
 
-    // Query circle -------------------------------
+    /* // Query circle -------------------------------
     stroke(0,255,0);
     noFill();
     var radio = 50;
@@ -119,8 +109,8 @@ function draw(){
         var y = found[i][1];
         fill (0 , 255 , 0);
         circle (x, height - y, 7);
-    }
+    } */
 
 
 }
-//} */
+//}
