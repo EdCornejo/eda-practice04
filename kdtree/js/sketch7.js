@@ -1,4 +1,4 @@
-//function evento7(){
+/* //function evento7(){
 let width = 500;
 let height = 300;
 
@@ -23,26 +23,11 @@ function setup () {
 
     root = build_kdtree(data);
     console.log(root);
-    console.log("digraph G {\n" + generate_dot(root) + "}");
-
-    // var point = [140 ,90]; // query
-    var point = [200 , 200]; // query
-    console.log("Este!: ", closest_point_brute_force(data, point))
-    console.log(naive_closest_point(root, point))
-
+    
     var count = 4;
 	var results = [];
 	knn_closest_point(root, point, count, 0, results);
-	// if (results.length > count)
-	// 	results.slice(0, count);
-    console.log('----knn_closest_point', results)
-
-    let found = kdtree_nearest_neighbor_query(root, point, 3)
-
-
-    console.log('nnquery', found)
-
-
+	console.log('----knn_closest_point', results)
 }
 
 function draw(){
@@ -96,21 +81,5 @@ function draw(){
          circle (x, height - y, 7);
      }
 
-    /* // Query circle -------------------------------
-    stroke(0,255,0);
-    noFill();
-    var radio = 50;
-    circle(mouseX, mouseY, radio * 2);
-    let found = []
-    var center = [mouseX, height - mouseY]
-    range_query_circle(root, center, 50, found)
-    for ( let i = 0; i < found.length; i ++) {
-        var x = found[i][0];
-        var y = found[i][1];
-        fill (0 , 255 , 0);
-        circle (x, height - y, 7);
-    } */
-
-
 }
-//}
+//} */
