@@ -148,8 +148,8 @@ function knn_closest_point(node , point ,count, depth = 0, results) {
     if (node === null)
         return;
     var axis = depth % k;
-    var distance = distanceSquared(node.point, point)
-    var i = results.length
+    var distance = distanceSquared(node.point, point);
+    var i = results.length;
     if (i == 0) {
         results.push({
             'node': node,
