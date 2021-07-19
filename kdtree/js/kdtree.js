@@ -189,16 +189,6 @@ function knn_closest_point(node , point ,count, depth = 0, results) {
         this.knn_closest_point(opposite, point, count, depth + 1, results);
 }
 
-function contains(rect, point) {
-    var point_inf = rect[0] // inferior izquierdo del rectangulo
-    var point_sup = rect[1] // superior derecho del rectangulo
-    return (
-        point[0]>=point_inf[0] &&
-        point[0]<=point_sup[0] &&
-        point[1]>=point_inf[1] &&
-        point[1]<=point_sup[1]);
-}
-
 function range_query_rect(node , rect , found , depth = 0) {
     if (node === null) {
         return;
