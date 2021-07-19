@@ -1,4 +1,4 @@
-//function evento7(){
+/* //function evento7(){
 let width = 500;
 let height = 300;
 
@@ -27,9 +27,7 @@ function setup () {
     var count = 4;
 	var results = [];
 	knn_closest_point(root, point, count, 0, results);
-	// if (results.length > count)
-	// 	results.slice(0, count);
-    console.log('----knn_closest_point', results)
+	console.log('----knn_closest_point', results)
 }
 
 function draw(){
@@ -84,4 +82,4 @@ function draw(){
      }
 
 }
-//}
+//} */
