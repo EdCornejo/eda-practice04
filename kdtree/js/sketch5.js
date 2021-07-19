@@ -22,13 +22,10 @@ function evento5 () {
     ];
 
     root = build_kdtree(data);
-    console.log(root);
-    console.log("digraph G {\n" + generate_dot(root) + "}");
-
     // var point = [140 ,90]; // query
     var point = [200 , 200]; // query
-    console.log("Este!: ", closest_point_brute_force(data, point))
-    console.log(naive_closest_point(root, point))
+    //console.log("Este!: ", closest_point_brute_force(data, point))
+    //console.log(naive_closest_point(root, point))
 
     var count = 4;
 	var results = [];
