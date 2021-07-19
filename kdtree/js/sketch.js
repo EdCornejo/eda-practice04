@@ -1,4 +1,4 @@
-function setup() {
+function evento1() {
     var width = 400;
     var height = 400;
     createCanvas (width , height) ;
@@ -13,8 +13,8 @@ function setup() {
             line (0 , y, width , y);
         }
     }
-}
-function evento1(){
+
+
     var width = 400;
     var height = 400;
     createCanvas (width , height) ;
