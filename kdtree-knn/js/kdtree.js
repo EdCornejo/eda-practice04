@@ -10,8 +10,8 @@ class Node {
 }
 
 function distanceSquared(point1, point2 ){
-    var distance = 0;
-    for (var i = 0; i < k; i ++)
+    let distance = 0;
+    for (let i = 0; i < k; i ++)
         distance += Math.pow ((point1 [i] - point2 [i]) , 2) ;
     return Math.sqrt ( distance );
 }
@@ -25,7 +25,6 @@ function closest_point_brute_force(points, point){
         //console.log(distance);
         if(best_distance === null || distance < best_distance){
             best_distance = distance;
-            //best_point = { 'point': points[i], 'distance': distance }
             best_point = points[i];
         }
     }
@@ -36,12 +35,15 @@ function naive_closest_point(node, point, depth = 0, best = null){
     //1. best = min(distance(point, node.point), best)
     //2. chose the branch according to axis per level
     //3. recursevely call by branch chosed
-    if (node === null)
-        return best;
+    if (node === null){
+       _best_point=best;
+        return _best_point;
+    }
     var axis = depth % k;
     var next_best = null; //next best point
     var next_branch = null; //next node brach to look for
-    if (best === null || (distanceSquared(best, point) > distanceSquared(node.point, point)))
+    _distance=distanceSquared(node.point, point);
+    if (best === null || (distanceSquared(best, point) > _distance))
         next_best = node.point;
     else
         next_best   = best;
@@ -51,9 +53,7 @@ function naive_closest_point(node, point, depth = 0, best = null){
         next_branch = node.right
     return  naive_closest_point(next_branch, point, depth +1, next_best);
 }
-
-
-function getHeight(node) {
+/* function getHeight(node) {
     if (node === null){
         return 0;
     }
@@ -61,8 +61,8 @@ function getHeight(node) {
     var lh = getHeight(node.left);
     var rh = getHeight(node.right);
     return 1 + max(lh,rh);
-}
-function generate_dot(node){
+} */
+ function generate_dot(node){
     if (node === null){
         return "";
     }
@@ -76,11 +76,11 @@ function generate_dot(node){
         tmp += generate_dot(node.right);
     }
     return tmp;
-}
+} 
 
 function build_kdtree(points, depth = 0){
-    var n = points.length;
-    var axis = depth % k;
+    let n = points.length;
+    let axis = depth % k;
     if (n <= 0){
         return null;
     }
@@ -97,84 +97,77 @@ function build_kdtree(points, depth = 0){
     var left = points.slice(0, median);
     var right = points.slice(median + 1);
     //console.log(right);
-    var node = new Node(points[median].slice(0, k), axis);
+    var node = new Node(points[median], axis);
     node.left = build_kdtree(left, depth + 1);
     node.right = build_kdtree(right, depth + 1);
 
     return node;
 }
 
-function closer_distance(pivot,p1,p2){
-    if (p1==null){
-        return p2;
-    }
-    if (p2==null){
-        return p1;
-    }
-    d1=distanceSquared(pivot,p1);
-    d2=distanceSquared(pivot,p2);
-    if (d1<d2){
-        return p1;
-    }else{
-        return p2;
-    }      
+function closest_point(node , point ) { 
+    var node=node;
+    var point=point;
+    var Npoint=naive_closest_point(node, point);
+    return  Npoint;
+
 }
-function closest_point(node , point , depth = 0) { 
-    if (node==null)
-        return null;
+
+
+let INF = 9999999999999;
+
+function update_neighbors(t, p, neighbors, n) {
     
-    var axis = depth % k;
-    var next_branch = null;
-    var opposite_branch=null;
-    if (point[axis]<node.point[axis]){
-        next_branch = node.left;
-        opposite_branch=node.right;
+    d = distanceSquared(p, t.point)
+    // for (i, x in enumerate(neighbors)) {
+    for (let i = 0; i < neighbors.length; i ++) {
+    var x =  neighbors[i]
+        if (i == n) {
+            return neighbors[n-1][1]
+        }
+        if (d < x[1]) {
+            neighbors.splice(i, 0, [t.point, d, t.label])
+            if (neighbors.length < n) {
+                return INF
+            }
+            return neighbors[n-1][1]
+        }
     }
-    else{
-        next_branch = node.right;
-        opposite_branch=node.left;
-    }
-    best=closer_distance(point, closest_point(next_branch,point, depth +1), node.point);
-    if (distanceSquared(point,best)>Math.abs(point[axis]-node.point[axis])){
-        best=closer_distance(point, closest_point(opposite_branch,point, depth +1), best);
-    }return best;
+    neighbors.push([t.point, d, t.label])
+    return INF
 }
-function range_query_circle(node , center , radio , queue , depth = 0) { }
 
-// digraph G {
-//     "106 ,189 " -> "6 ,114";
-//     "6 ,114" -> " 90 ,102";
-//     "90 ,102 " -> "21 ,84";
-//     "6 ,114" -> " 84 ,138";
-//     "84 ,138 " -> "5 ,150";
-//     "106 ,189 " -> "148 ,85 ";
-//     "148 ,85 " -> "181 ,45 ";
-//     "181 ,45 " -> "161 ,29 ";
-//     "148 ,85 " -> "158 ,120 ";
-// }
+let maxdist
 
+function nnquery(t, p, n, found, depth=0) {
+    if (t == null) {
+        return null
+    }
+    if (t.left == null & t.right == null) {
+        maxdist = update_neighbors(t, p, found, n)
+        return
+    }
+    axis = depth % p.length
+    var nearer_tree
+    var farther_tree
+    if (p[axis] < t.point[axis]) {
+        nearer_tree = t.left
+        farther_tree = t.right
+    } else {
+        nearer_tree = t.right
+        farther_tree = t.left
 
+    }
+    nnquery(nearer_tree, p, n, found, depth+1)
+    maxdist = update_neighbors(t, p, found, n)
+    if (Math.abs(t.point[axis]-p[axis]) < maxdist) // must check the far side
+        nnquery(farther_tree, p, n, found, depth+1)
+    return
+}
 
+function kdtree_nearest_neighbor_query(t, p, n=1) {
+    let nearest_neighbors = []
+    nnquery(t, p, n, nearest_neighbors)
+    // console.log(nearest_neighbors);
+    return nearest_neighbors.slice(0, n);
+}
 
-// var data = [
-//     [40 ,70] ,
-//     [70 ,130] ,
-//     [90 ,40] ,
-//     [110 , 100] ,
-//     [140 ,110] ,
-//     [160 , 100]
-// ];
-
-// var point = [140 ,90]; // query
-
-
-// var data = [
-//     [40 ,70] ,
-//     [70 ,130] ,
-//     [90 ,40] ,
-//     [110 , 100] ,
-//     [140 ,110] ,
-//     [160 , 100] ,
-//     [150 , 30]
-// ];
-// var point = [140 ,90]; // query
