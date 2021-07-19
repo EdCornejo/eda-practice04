@@ -5,15 +5,15 @@ function setup () {
 
     background (0) ;
 
-    for (var x = 0; x < width; x += width / 10) {
-        for (var y = 0; y < height; y += height / 5) {
+    for (var x = 0; x < width; x += 100) {
+        for (var y = 0; y < height; y += 100) {
             stroke (125 , 125 , 125) ;
             strokeWeight (1) ;
             line (x, 0, x, height );
             line (0 , y, width , y);
         }
     }
-//Ingresa datos aleatorios
+    //Ingresa datos aleatorios
     /* var data = [];
 
     for ( let i = 0; i < 6; i ++) {
@@ -50,4 +50,24 @@ function setup () {
     var root = build_kdtree(data) ;
     console.log(root);
     console.log("digraph G {\n" + generate_dot(root) + "}");
+
+    var point = [140 ,90]; // query
+    var pointX = point[0];
+    var pointY = point[1];
+    fill (0 , 255 , 255);
+    circle (pointX, height - pointY, 7) ; // 200 -y para q se dibuje apropiadamente
+    text(pointX + ',' + pointY, pointX + 5, height - pointY);// 200 -y para q se dibuje apropiadamente
+
+    
+    console.log('closest_point_brute_force', closest_point_brute_force(data, point))
+    console.log('naive_closest_point', naive_closest_point(root, point))
+    console.log('closest_point', closest_point(root, point))
+
+    var found = closest_point(root, point)
+    var foundX = found[0];
+    var foundY = found[1];
+
+    fill(0 , 255, 0);
+    circle (foundX, height - foundY, 7) ; // 200 -y para q se dibuje apropiadamente
+    text(foundX + ',' + foundY, foundX + 5, height - foundY);// 200 -y para q se dibuje apropiadamente
 }
