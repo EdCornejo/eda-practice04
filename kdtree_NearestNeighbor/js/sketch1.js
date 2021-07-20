@@ -1,6 +1,6 @@
-function evento3(){
-    var width = 201;
-    var height = 200;
+function evento1(){
+    var width = 500;
+    var height = 300;
     createCanvas (width , height) ;
 
     background (0) ;
@@ -48,9 +48,9 @@ function evento3(){
     //console.log("NN closest ="+closest_point(root,_point));
 
 }
-function evento4(){
-    var width = 201;
-    var height = 200;
+function evento2(){
+    var width = 500;
+    var height = 300;
     createCanvas (width , height) ;
 
     background (0) ;

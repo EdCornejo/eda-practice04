@@ -1,6 +1,6 @@
-function evento5(){
-    var width = 201;
-    var height = 200;
+function setup(){
+    var width = 500;
+    var height = 300;
     createCanvas (width , height) ;
 
     background (0) ;
@@ -13,18 +13,20 @@ function evento5(){
             line (0 , y, width , y);
         }
     }
-    var data = [
-        [40 ,70] ,
-        [70 ,130] ,
-        [90 ,40] ,
-        [110 , 100] ,
-        [140 ,110] ,
-        [160 , 100], 
-        [150 , 30]
-    ];
-    var _point= [140,90];
+var data = [
+     [40 ,70] ,
+     [70 ,130] ,
+     [90 ,40] ,
+     [110 , 100] ,
+     [140 ,110] ,
+     [160 , 100] 
+ ];
+ var _point= [140,90];
 
     for ( let i = 0; i < data.length; i ++) {
+        /* var x = Math.floor ( Math.random () * height );
+        var y = Math.floor ( Math.random () * height );
+        data.push ([x, y]) ; */
         fill (255 , 255 , 0) ;
         let x=data[i][0];
         let y=data[i][1];
@@ -41,10 +43,10 @@ function evento5(){
     text(_point[0] + ',' + _point[1], _point[0], height-_point[1]);
 
     var root = build_kdtree(data);
-    /* console.log(root);
+    console.log(root);
     console.log("digraph G {\n" + generate_dot(root) + "}");
     console.log("NN brute_force ="+closest_point_brute_force(data,_point));
-    console.log("NN naive_closest ="+naive_closest_point(root,_point)); */
-    console.log("NN closest ="+closest_point(root,_point));
+    console.log("NN naive_closest ="+naive_closest_point(root,_point));
+    //console.log("NN closest ="+closest_point(root,_point));
 
 }
