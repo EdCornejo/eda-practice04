@@ -19,7 +19,7 @@ function build_kdtree(points, depth = 0){
         return new Node(points[0], axis)
     }
     var median = Math.floor(points.length / 2);
-    // sort by the axis
+   
     points.sort(function(a, b)
     {
         return a[axis] - b[axis];
@@ -169,7 +169,7 @@ function knn_closest_point(node , point ,count, depth = 0, results) {
     // get rid of any extra results
 	while (results.length > count)
         results.pop();
-    // whats got the got best _search result? left or right?
+    
     var goLeft = node.point[axis] < point[axis];
 
     var target = goLeft ? node.left : node.right;
