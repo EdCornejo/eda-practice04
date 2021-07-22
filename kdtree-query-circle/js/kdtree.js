@@ -34,15 +34,12 @@ function closest_point_brute_force(points, point){
 }
 
 function naive_closest_point(node, point, depth = 0, best = null){
-    //algorithm
-    //1. best = min(distance(point, node.point), best)
-    //2. chose the branch according to axis per level
-    //3. recursevely call by branch chosed
+    
     if (node === null)
         return best;
     var axis = depth % k;
-    var next_best = null; //next best point
-    var next_branch = null; //next node brach to look for
+    var next_best = null; 
+    var next_branch = null; 
     if (best === null || (distanceSquared(best, point) > distanceSquared(node.point, point)))
         next_best = node.point;
     else

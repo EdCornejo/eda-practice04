@@ -30,15 +30,12 @@ function closest_point_brute_force(points, point) {
     return best_point;
 }
 function naive_closest_point(node, point, depth = 0, best = null){
-    //algorithm
-    //1. best = min(distance(point, node.point), best)
-    //2. chose the branch according to axis per level
-    //3. recursevely call by branch chosed
+    
     if (node === null)
         return best;
     var axis = depth % k;
-    var next_best = null; //next best point
-    var next_branch = null; //next node brach to look for
+    var next_best = null; 
+    var next_branch = null; 
     if (best === null || (distanceSquared(best, point) > distanceSquared(node.point, point)))
         next_best = node.point;
     else
@@ -55,7 +52,7 @@ function getHeight(node) {
     if (node === null){
         return 0;
     }
-    // find the height of each subtree
+    
     var lh = getHeight(node.left);
     var rh = getHeight(node.right);
     return 1 + max(lh,rh);
@@ -86,7 +83,7 @@ function build_kdtree(points, depth = 0){
         return new Node(points[0], axis)
     }
     var median = Math.floor(points.length / 2);
-    // sort by the axis
+    
     points.sort(function(a, b)
     {
         return a[axis] - b[axis];
