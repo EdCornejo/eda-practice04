@@ -276,3 +276,10 @@ function kdtree_nearest_neighbor_query(t, p, n=1) {
     // console.log(nearest_neighbors);
     return nearest_neighbors.slice(0, n);
 }
+
+function getMax(object) {
+    return Object.keys(object).filter(x => {
+        return object[x] == Math.max.apply(null,
+        Object.values(object));
+    });
+};

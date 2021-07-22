@@ -9,12 +9,6 @@
     <script src="./js/iris_train.js"></script>
     <script src="./js/iris_test.js"></script>
     <script>
-    function getMax(object) {
-        return Object.keys(object).filter(x => {
-            return object[x] == Math.max.apply(null,
-            Object.values(object));
-        });
-    };
 
     var root = build_kdtree(data);
 
@@ -32,7 +26,7 @@
         if (getMax(prediction)[0] == data_test[i].label){
             counter++;
         }
-        console.log("Point", data_test[i].point, "Prediction", getMax(prediction)[0], "- Label", data_test[i].label)
+        console.log("Point ",i, data_test[i].point, "Prediction", getMax(prediction)[0], "- Label", data_test[i].label)
     }
     console.log('Datos en el árbol:', data.length)
     console.log('Datos de prueba:', data_test.length)
