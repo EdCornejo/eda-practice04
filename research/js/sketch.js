@@ -166,21 +166,21 @@ function setup() {
 
     // test with test data
     var digits = kdtree_nearest_neighbor_query(root, point, 10)
-    // console.log(digits);
+    console.log(digits);
 
-    var counter = 0;
-    for(let i = 0 ; i < data_test.length ; i++){
-        let results = kdtree_nearest_neighbor_query(root, data_test[i].point, 10)
-        let prediction = {0:0, 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0};
-        for(let i = 0 ; i < results.length ; i++){
-            prediction[results[i][2]]++;
-        }
-        if (getMax(prediction)[0] == data_test[i].label){
-            counter++;
-        }
-    }
-    console.log('Total:', data_test.length)
-    console.log('Correct:', counter)
-    console.log("Acc: ", counter/data_test.length);
+    // var counter = 0;
+    // for(let i = 0 ; i < data_test.length ; i++){
+    //     let results = kdtree_nearest_neighbor_query(root, data_test[i].point, 10)
+    //     let prediction = {0:0, 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0};
+    //     for(let i = 0 ; i < results.length ; i++){
+    //         prediction[results[i][2]]++;
+    //     }
+    //     if (getMax(prediction)[0] == data_test[i].label){
+    //         counter++;
+    //     }
+    // }
+    // console.log('Total:', data_test.length)
+    // console.log('Correct:', counter)
+    // console.log("Acc: ", counter/data_test.length);
 
 }
