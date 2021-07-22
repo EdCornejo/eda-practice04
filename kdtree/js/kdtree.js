@@ -198,7 +198,7 @@ function range_query_rect(node , rect , found , depth = 0) {
     }
     let x = node.point[0]
     let y = node.point[1]
-    if (!(rect[0][0]>x || rect[0][1]<x || rect[1][0]>y || rect[1][1]<y)) { // test node in rect
+    if (!(rect[0][0]>x || rect[0][1]<x || rect[1][0]>y || rect[1][1]<y)) { 
         found.push(node.point)
     }
     range_query_rect(node.left, rect, found, depth+1)
