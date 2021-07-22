@@ -83,7 +83,7 @@ function build_kdtree(points, depth = 0){
         return new Node(points[0], axis)
     }
     var median = Math.floor(points.length / 2);
-    // sort by the axis
+    
     points.sort(function(a, b)
     {
         return a[axis] - b[axis];
