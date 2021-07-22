@@ -19,15 +19,12 @@ function build_kdtree(points, depth = 0){
         return new Node(points[0], axis)
     }
     var median = Math.floor(points.length / 2);
-    // sort by the axis
     points.sort(function(a, b)
     {
         return a[axis] - b[axis];
     });
-    //console.log(points);
     var left = points.slice(0, median);
     var right = points.slice(median + 1);
-    //console.log(right);
     var node = new Node(points[median], axis);
     node.left = build_kdtree(left, depth + 1);
     node.right = build_kdtree(right, depth + 1);
@@ -38,7 +35,6 @@ function getHeight(node) {
     if (node === null){
         return 0;
     }
-    // find the height of each subtree
     var lh = getHeight(node.left);
     var rh = getHeight(node.right);
     return 1 + max(lh,rh);
@@ -63,7 +59,6 @@ function distanceSquared(point1, point2 ){
     let distance = 0;
     for (let i = 0; i < k; i ++)
         distance += Math.pow ((point1 [i] - point2 [i]) , 2) ;
-    //return distance;
     return Math.sqrt(distance);
 }
 
@@ -73,7 +68,6 @@ function closest_point_brute_force(points, point){
     var best_point = null;
     for(let i = 0; i < points.length; i++){
         distance = distanceSquared(points[i], point);
-        //console.log(distance);
         if(best_distance === null || distance < best_distance){
             best_distance = distance;
             best_point = points[i];
@@ -82,17 +76,13 @@ function closest_point_brute_force(points, point){
     return best_point;
 }
 function naive_closest_point(node, point, depth = 0, best = null){
-    //algorithm
-    //1. best = min(distance(point, node.point), best)
-    //2. chose the branch according to axis per level
-    //3. recursevely call by branch chosed
     if (node === null){
        _best_point=best;
         return _best_point;
     }
     var axis = depth % k;
-    var next_best = null; //next best point
-    var next_branch = null; //next node brach to look for
+    var next_best = null; 
+    var next_branch = null; 
     _distance=distanceSquared(node.point, point);
     if (best === null || (distanceSquared(best, point) > _distance))
         next_best = node.point;
@@ -160,31 +150,23 @@ function knn_closest_point(node , point ,count, depth = 0, results) {
 		if (distance < results[i].distance)
 			break;
 	}
-    // splice in our result
     if ((i >= 0) &&  (i <= count))
     {
-        // console.log('splicing in ' + node.point + ' with dist=' + distance + ' at ' + i);
         results.splice(i, 0, {
             'node': node,
             'distance': distance,
         });
     }
-    // get rid of any extra results
 	while (results.length > count)
         results.pop();
-    // whats got the got best _search result? left or right?
     var goLeft = node.point[axis] < point[axis];
 
     var target = goLeft ? node.left : node.right;
     var opposite = goLeft ? node.right : node.left;
 
-    // target has our most likely nearest point, we go down that side of the
-    // tree first
     if (target)
         this.knn_closest_point(target, point, count, depth + 1, results);
 
-    // _search the opposite direction, only if there is potentially a better
-    // value than the longest distance we already have in our _search results
     if ((opposite) && (distanceSquared(opposite.point, point) <= results[results.length - 1].distance))
         this.knn_closest_point(opposite, point, count, depth + 1, results);
 }
