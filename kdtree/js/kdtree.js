@@ -38,7 +38,7 @@ function getHeight(node) {
     if (node === null){
         return 0;
     }
-    // find the height of each subtree
+    
     var lh = getHeight(node.left);
     var rh = getHeight(node.right);
     return 1 + max(lh,rh);
