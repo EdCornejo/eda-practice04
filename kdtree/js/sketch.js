@@ -16,7 +16,7 @@ var data = [];
 var num_datos=document.getElementById("num").value;
 if(num_datos==0){num_datos=10}
     for ( let i = 0; i < num_datos; i ++) {
-        let x = Math.floor ( Math.random () * height );
+        let x = Math.floor ( Math.random () * width);
         let y = Math.floor ( Math.random () * height );
         data.push ([x, y]) ;
         fill (255 , 255 , 255) ;
