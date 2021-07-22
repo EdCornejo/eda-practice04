@@ -88,8 +88,8 @@ function naive_closest_point(node, point, depth = 0, best = null){
         return _best_point;
     }
     var axis = depth % k;
-    var next_best = null; //next best point
-    var next_branch = null; //next node brach to look for
+    var next_best = null; 
+    var next_branch = null;
     _distance=distanceSquared(node.point, point);
     if (best === null || (distanceSquared(best, point) > _distance))
         next_best = node.point;
@@ -157,7 +157,7 @@ function knn_closest_point(node , point ,count, depth = 0, results) {
 		if (distance < results[i].distance)
 			break;
 	}
-    // splice in our result
+    
     if ((i >= 0) &&  (i <= count))
     {
         // console.log('splicing in ' + node.point + ' with dist=' + distance + ' at ' + i);
