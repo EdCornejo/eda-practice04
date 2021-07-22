@@ -63,7 +63,7 @@ function distanceSquared(point1, point2 ){
     let distance = 0;
     for (let i = 0; i < k; i ++)
         distance += Math.pow ((point1 [i] - point2 [i]) , 2) ;
-    //return distance;
+    
     return Math.sqrt(distance);
 }
 
@@ -73,7 +73,7 @@ function closest_point_brute_force(points, point){
     var best_point = null;
     for(let i = 0; i < points.length; i++){
         distance = distanceSquared(points[i], point);
-        //console.log(distance);
+        
         if(best_distance === null || distance < best_distance){
             best_distance = distance;
             best_point = points[i];
@@ -82,10 +82,7 @@ function closest_point_brute_force(points, point){
     return best_point;
 }
 function naive_closest_point(node, point, depth = 0, best = null){
-    //algorithm
-    //1. best = min(distance(point, node.point), best)
-    //2. chose the branch according to axis per level
-    //3. recursevely call by branch chosed
+    
     if (node === null){
        _best_point=best;
         return _best_point;
@@ -178,13 +175,10 @@ function knn_closest_point(node , point ,count, depth = 0, results) {
     var target = goLeft ? node.left : node.right;
     var opposite = goLeft ? node.right : node.left;
 
-    // target has our most likely nearest point, we go down that side of the
-    // tree first
+   
     if (target)
         this.knn_closest_point(target, point, count, depth + 1, results);
 
-    // _search the opposite direction, only if there is potentially a better
-    // value than the longest distance we already have in our _search results
     if ((opposite) && (distanceSquared(opposite.point, point) <= results[results.length - 1].distance))
         this.knn_closest_point(opposite, point, count, depth + 1, results);
 }
