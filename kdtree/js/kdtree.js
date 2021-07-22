@@ -166,7 +166,7 @@ function knn_closest_point(node , point ,count, depth = 0, results) {
             'distance': distance,
         });
     }
-    // get rid of any extra results
+   
 	while (results.length > count)
         results.pop();
     
