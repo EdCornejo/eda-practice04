@@ -23,7 +23,6 @@ function closest_point_brute_force(points, point){
     var best_point = null;
     for(let i = 0; i < points.length; i++){
         distance = distanceSquared(points[i], point);
-        //console.log(distance);
         if(best_distance === null || distance < best_distance){
             best_distance = distance;
             best_point = points[i];
@@ -225,11 +224,8 @@ function update_neighbors(t, p, neighbors, n) {
 
     d = distanceSquared(p, t.point)
 
-    // console.log('distance', p, t.point)
-    // console.log('d', d)
-    // for (i, x in enumerate(neighbors)) {
     for (let i = 0; i < neighbors.length; i ++) {
-    var x =  neighbors[i]
+        var x =  neighbors[i]
         if (i == n) {
             return neighbors[n-1][1]
         }
@@ -241,6 +237,7 @@ function update_neighbors(t, p, neighbors, n) {
             return neighbors[n-1][1]
         }
     }
+
     neighbors.push([t.point, d, t.label])
     return INF
 }
@@ -248,7 +245,6 @@ function update_neighbors(t, p, neighbors, n) {
 let maxdist
 
 function nnquery(t, p, n, found, depth=0) {
-    // console.log('t', t)
     if (t == null) {
         return null
     }

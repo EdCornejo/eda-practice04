@@ -48,20 +48,20 @@ def deskew(img):
     return img
 
 def svmInit(C=12.5, gamma=0.50625):
-  model = cv2.ml.SVM_create()
-  model.setGamma(gamma)
-  model.setC(C)
-  model.setKernel(cv2.ml.SVM_RBF)
-  model.setType(cv2.ml.SVM_C_SVC)
-  
-  return model
+    model = cv2.ml.SVM_create()
+    model.setGamma(gamma)
+    model.setC(C)
+    model.setKernel(cv2.ml.SVM_RBF)
+    model.setType(cv2.ml.SVM_C_SVC)
+
+    return model
 
 def svmTrain(model, samples, responses):
-  model.train(samples, cv2.ml.ROW_SAMPLE, responses)
-  return model
+    model.train(samples, cv2.ml.ROW_SAMPLE, responses)
+    return model
 
 def svmPredict(model, samples):
-  return model.predict(samples)[1].ravel()
+    return model.predict(samples)[1].ravel()
 
 def svmEvaluate(model, digits, samples, labels):
     predictions = svmPredict(model, samples)
