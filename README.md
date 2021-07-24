@@ -5,6 +5,12 @@ Implementación de KD-Tree.
 
 Enlace a [Github EDA PRACTICE 04](https://github.com/EdCornejo/eda-practice04)
 
+
+## Video 
+
+[![Watch the video](https://user-images.githubusercontent.com/85813554/126859446-cb5e6a02-3e3e-4614-af4c-a572c2e89131.png)](https://drive.google.com/file/d/1wm_PqxZZUgtirTKlZXleAYIWThk8Fpqq/view)
+
+
 ## Integrantes - GRUPO 2
 - Choquehuayta Alcamari Hans
 - Cornejo Mayta Edwin
